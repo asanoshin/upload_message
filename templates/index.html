@@ -20,6 +20,11 @@
     <title>發送 LINE 訊息</title>
 </head>
 <body>
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
     <h2>上傳 CSV 檔案</h2>
     <form action="/send" method="post" enctype="multipart/form-data">
         <input type="file" name="file" accept=".csv">
