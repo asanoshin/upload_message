@@ -82,41 +82,14 @@ line_bot_api = LineBotApi('CFpKo+Ei6jeRbHhKFB6H70Fs806m2HIyydxv0GmqKR5d1kgNtBaf6
 YOUR_CHANNEL_SECRET = '495877a8a3b6ced6a694c97e969bd231'
 # U879e3796fbb1185b9654c34152d07ed9
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
 
-@app.route('/send', methods=['POST'])
-def send_message():
-    if 'file' not in request.files:
-        flash('No file part', 'error')
-        return redirect(url_for('index'))
 
-    file = request.files['file']
+# if __name__ == '__main__':
+#     app.run()
 
-    if file.filename == '':
-        flash('No selected file', 'error')
-        return redirect(url_for('index'))
-
-    if file:
-        try:
-            df = pd.read_csv(file)
-            for index, row in df.iterrows():
-                line_id = row[0]
-                message = row[1]
-                line_bot_api.push_message(line_id, TextSendMessage(text=message))
-            
-            flash('Messages sent successfully', 'success')
-        except Exception as e:
-            flash(f'Error: {e}', 'error')
-
-        return redirect(url_for('index'))
-
-    flash('Upload error', 'error')
-    return redirect(url_for('index'))
-
-if __name__ == '__main__':
-    app.run()
 # @app.route('/')
 # def index():
 #     return render_template('index.html')
@@ -154,7 +127,38 @@ if __name__ == '__main__':
 #     app.run()
 
 
+@app.route('/send', methods=['POST'])
+def send_message():
+    try:
+        if 'file' not in request.files:
+            return 'No file part'
 
+        file = request.files['file']
+
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(url_for('index'))
+
+        if file:
+            df = pd.read_csv(file)
+            for index, row in df.iterrows():
+                line_id = row[0]
+                message = row[1]
+                line_bot_api.push_message(line_id, TextSendMessage(text=message))
+            
+            # 在這裡刪除文件
+            # os.remove(file.filename)
+
+            return 'Messages sent'
+
+        return 'Upload error'
+    except Exception as e:
+        # 打印錯誤信息到控制台，或考慮使用日誌記錄
+        print(f"Error: {e}")
+        return str(e)
+
+if __name__ == '__main__':
+    app.run()
 
 # ----------------------
 # from flask import Flask, request
