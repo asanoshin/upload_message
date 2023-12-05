@@ -86,6 +86,10 @@ YOUR_CHANNEL_SECRET = '495877a8a3b6ced6a694c97e969bd231'
 def index():
     return render_template('index.html')
 
+# @app.route('/upload_send_message')
+# def index():
+#     return render_template('upload_send_message.html')
+
 
 # @app.route('/send', methods=['POST'])
 # def send_message():
@@ -120,8 +124,8 @@ def index():
 #     app.run()
 
 
-@app.route('/send', methods=['POST'])
-def send_message():
+@app.route('/send_ptfile', methods=['POST'])
+def send_patient_file():
     try:
         if 'file' not in request.files:
             return 'No file part'
