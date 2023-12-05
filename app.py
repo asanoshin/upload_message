@@ -82,17 +82,10 @@ line_bot_api = LineBotApi('CFpKo+Ei6jeRbHhKFB6H70Fs806m2HIyydxv0GmqKR5d1kgNtBaf6
 YOUR_CHANNEL_SECRET = '495877a8a3b6ced6a694c97e969bd231'
 # U879e3796fbb1185b9654c34152d07ed9
 
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-
-# if __name__ == '__main__':
-#     app.run()
-
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
 
 # @app.route('/send', methods=['POST'])
 # def send_message():
